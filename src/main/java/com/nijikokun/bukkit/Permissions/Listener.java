@@ -2,10 +2,10 @@ package com.nijikokun.bukkit.Permissions;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockListener;
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 /**
  * Permissions 2.x Copyright (C) 2011 Matt 'The Yeti' Burnett
@@ -26,7 +26,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Listener extends BlockListener {
+public class Listener implements org.bukkit.event.Listener {
     @SuppressWarnings("unused")
     private final Permissions plugin;
 
@@ -34,7 +34,7 @@ public class Listener extends BlockListener {
         this.plugin = plugin;
     }
 
-    @Override
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         final World world;
@@ -52,7 +52,7 @@ public class Listener extends BlockListener {
         return;
     }
 
-    @Override
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBlockBreak(BlockBreakEvent event) {
         final Player player = event.getPlayer();
         final World world;

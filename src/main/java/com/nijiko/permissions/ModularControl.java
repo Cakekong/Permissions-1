@@ -4,20 +4,20 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-//import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.bukkit.entity.Player;
-import org.bukkit.util.config.Configuration;
 
 import com.nijiko.data.GroupStorage;
 import com.nijiko.data.GroupWorld;
 import com.nijiko.data.StorageFactory;
 import com.nijiko.data.UserStorage;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 public class ModularControl extends PermissionHandler {
     private Map<String, String> userStorageMirrorings = new HashMap<String, String>();
@@ -192,7 +192,7 @@ public class ModularControl extends PermissionHandler {
         userStorageInheritance.clear();
         groupStorageInheritance.clear();
         storageConfig.load();
-        List<String> worlds = storageConfig.getKeys("permissions.storage.world-inheritance");
+        Collection<String> worlds = storageConfig.getKeys("permissions.storage.world-inheritance");
         Map<String, String> worldInheritance = new HashMap<String, String>();
         if (worlds != null) {
             for (String world : worlds) {
@@ -201,7 +201,7 @@ public class ModularControl extends PermissionHandler {
                     worldInheritance.put(world, parentWorld);
             }
         }
-        List<String> userWorlds = storageConfig.getKeys("permissions.storage.user.world-inheritance");
+        Collection<String> userWorlds = storageConfig.getKeys("permissions.storage.user.world-inheritance");
         if (userWorlds != null) {
             for (String userWorld : userWorlds) {
                 String parentWorld = storageConfig.getString("permissions.storage.user.world-inheritance.users" + userWorld);
@@ -215,7 +215,7 @@ public class ModularControl extends PermissionHandler {
             }
         }
 
-        List<String> groupWorlds = storageConfig.getKeys("permissions.storage.group.world-inheritance");
+        Collection<String> groupWorlds = storageConfig.getKeys("permissions.storage.group.world-inheritance");
         if (groupWorlds != null) {
             for (String groupWorld : groupWorlds) {
                 String parentWorld = storageConfig.getString("permissions.storage.group.world-inheritance." + groupWorld);

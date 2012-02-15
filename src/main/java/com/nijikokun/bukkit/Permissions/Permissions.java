@@ -10,13 +10,9 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-//import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
 
 import com.nijiko.MessageHelper;
 import com.nijiko.data.StorageFactory;
@@ -25,6 +21,7 @@ import com.nijiko.permissions.ModularControl;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.commands.CommandManager;
 import com.nijikokun.bukkit.Permissions.commands.OldPrCommand;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 /**
  * Permissions 3.x Copyright (C) 2011 Matt 'The Yeti' Burnett <admin@theyeticave.net> Original Credit & Copyright (C) 2010 Nijikokun <nijikokun@gmail.com>
@@ -203,9 +200,11 @@ public class Permissions extends JavaPlugin {
         // Enabled
         log.info("[" + description.getName() + "] version [" + description.getVersion() + "] (" + codename + ")  loaded");
 
-        this.getServer().getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, buildListener, Priority.High, this);
-        this.getServer().getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, buildListener, Priority.High, this);
-        this.getServer().getPluginManager().registerEvent(Event.Type.WORLD_LOAD, wListener, Priority.Monitor, this);
+        this.getServer().getPluginManager().registerEvents(buildListener, this);
+        this.getServer().getPluginManager().registerEvents(wListener, this);
+        //this.getServer().getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, buildListener, Priority.High, this);
+        //this.getServer().getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, buildListener, Priority.High, this);
+        //this.getServer().getPluginManager().registerEvent(Event.Type.WORLD_LOAD, wListener, Priority.Monitor, this);
     }
 
     @Override

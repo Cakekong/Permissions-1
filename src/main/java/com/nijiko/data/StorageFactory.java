@@ -3,7 +3,7 @@ package com.nijiko.data;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.util.config.Configuration;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 //TODO: Remove duplicated code
 public final class StorageFactory {

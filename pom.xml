@@ -5,6 +5,12 @@
     <version>3.2</version>
     <name>Permissions</name>
     <url>https://github.com/TheYeti/Permissions</url>
+    <repositories>
+        <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public</url>
+        </repository>
+    </repositories>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/TheYeti/Permissions/issues</url>
@@ -61,9 +67,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <version>1.1-R4</version>
         </dependency>
     </dependencies>
     <properties>

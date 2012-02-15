@@ -1,6 +1,7 @@
 package com.nijiko.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -10,10 +11,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.bukkit.util.config.Configuration;
-import org.bukkit.util.config.ConfigurationNode;
+import org.bukkit.configuration.ConfigurationSection;
 
 import com.nijiko.permissions.EntryType;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 public class YamlUserStorage implements UserStorage {
     protected final Configuration userConfig;
@@ -38,9 +39,9 @@ public class YamlUserStorage implements UserStorage {
         boolean converting = false;
 
         for (String user : this.getEntries()) {
-            ConfigurationNode node = userConfig.getNode("users." + user);
+            ConfigurationSection node = userConfig.getConfigurationSection("users." + user);
 
-            if (node.getProperty("groups") == null) {
+            if (node.get("groups") == null) {
                 if (!converting) {
                     System.out.println("[Permissions] Converting GM/2.x syntax files...");
                     converting = true;
@@ -51,25 +52,27 @@ public class YamlUserStorage implements UserStorage {
                 if (mainGroup != null)
                     groups.add(mainGroup);
 
-                List<String> subgroups = node.getStringList("subgroups", null);
+                List<String> subgroups = node.getStringList("subgroups");
+                if(subgroups != null)
                 for (String subgroup : subgroups) {
                     if (subgroup != null && !subgroup.isEmpty())
                         groups.add(subgroup);
                 }
 
-                node.removeProperty("group");
-                node.removeProperty("subgroups");
+                node.set("group", null);
+                node.set("subgroups", null);
 
-                node.setProperty("groups", new LinkedList<String>(groups));
+                node.set("groups", new LinkedList<String>(groups));
 
                 LinkedHashSet<String> perms = new LinkedHashSet<String>();
-                List<String> oldperms = node.getStringList("permissions", null);
+                List<String> oldperms = node.getStringList("permissions");
+                if(oldperms != null)
                 for (String oldperm : oldperms) {
                     if (oldperm != null && !oldperm.isEmpty()) {
                         perms.add(oldperm.startsWith("+") ? oldperm.substring(1) : oldperm);
                     }
                 }
-                node.setProperty("permissions", new LinkedList<String>(perms));
+                node.set("permissions", new LinkedList<String>(perms));
 
             } else
                 break;
@@ -221,7 +224,7 @@ public class YamlUserStorage implements UserStorage {
     @Override
     public Set<String> getEntries() {
         rwl.readLock().lock();
-        List<String> rawUsers = null;
+        Collection<String> rawUsers = null;
         try {
             rawUsers = userConfig.getKeys("users");
         } finally {

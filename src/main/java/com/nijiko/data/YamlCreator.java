@@ -3,9 +3,8 @@ package com.nijiko.data;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.util.config.Configuration;
-
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 public class YamlCreator implements StorageCreator {
 

@@ -2,6 +2,7 @@ package com.nijiko.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -11,9 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.bukkit.util.config.Configuration;
-
 import com.nijiko.permissions.EntryType;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 public class YamlGroupStorage implements GroupStorage {
     private final Configuration groupConfig;
@@ -155,7 +155,7 @@ public class YamlGroupStorage implements GroupStorage {
     @Override
     public Set<String> getEntries() {
         rwl.readLock().lock();
-        List<String> rawGroups = null;
+        Collection<String> rawGroups = null;
         try {
             rawGroups = groupConfig.getKeys("groups");
         } finally {
@@ -291,7 +291,7 @@ public class YamlGroupStorage implements GroupStorage {
 
     @Override
     public Set<String> getTracks() {
-        List<String> rawTracks = null;
+        Collection<String> rawTracks = null;
         rwl.readLock().lock();
         try {
             rawTracks = groupConfig.getKeys("tracks");

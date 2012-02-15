@@ -1,6 +1,6 @@
 package com.nijiko.data;
 
-import org.bukkit.util.config.Configuration;
+import com.wolvereness.nijipermissions.compatibility.Configuration;
 
 public interface StorageCreator {
     public UserStorage getUserStorage(String world, int reload, boolean autosave, Configuration config) throws Exception;
